@@ -2,14 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import About from './Pages/About.vue'
-import Welcome from './Pages/Welcome.vue'
+import TopPage from './Pages/TopPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
     {
+        name: 'TopPage',
         path: '/',
-        component: Welcome
+        component: TopPage
     },
     {
         path: '/about',
