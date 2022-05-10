@@ -1,26 +1,27 @@
 <template>
     <div>
-        <v-row>
+        <v-row fill-height>
             <v-col
-                v-for="n in 8"
-                :key="n"
+                v-for="anime in animes"
+                :key="anime.id"
                 cols="12"
                 sm="3"
             >
                 <v-card
-                    :loading="loading"
                     max-width="300"
+                    class="height-400"
                 >
                     <v-img
                         height="250"
                         src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
                     ></v-img>
-                    <v-card-title class="justify-center">SPY FAMILY</v-card-title>
+                    <v-card-title class="justify-center">{{ anime.title }}</v-card-title>
                     <v-card-actions class="justify-center">
-                        <router-link to="/about">
+                        <router-link :to="`detail/${anime.id}`">
                             <v-btn
                                 color="primary"
                                 elevation="6"
+                                class="mr-2"
                             >
                             詳細
                             </v-btn>
@@ -39,5 +40,22 @@
 </template>
 
 <script>
-    // import HeaderComponent from '../../components/HeaderComponent.vue'
+    export default {
+        data() {
+            return {
+                animes: []
+            }
+        },
+        methods: {
+            getAnimes() {
+                axios.get('/api/animes')
+                    .then((res) => {
+                        this.animes = res.data;
+                    });
+            }
+        },
+        mounted() {
+            this.getAnimes();
+        }
+    }
 </script>

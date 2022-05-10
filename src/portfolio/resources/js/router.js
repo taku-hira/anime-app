@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import About from './Pages/About.vue'
+import Detail from './Pages/Detail.vue'
 import TopPage from './Pages/TopPage.vue'
 
 Vue.use(VueRouter)
@@ -13,8 +13,9 @@ const routes = [
         component: TopPage
     },
     {
-        path: '/about',
-        component: About
+        name: 'detail',
+        path: '/detail/:id',
+        component: Detail
     }
 ]
 
