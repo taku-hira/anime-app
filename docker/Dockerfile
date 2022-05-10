@@ -15,6 +15,9 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/* && \
     docker-php-ext-install intl mbstring opcache pdo_mysql zip
 
+RUN cd /etc/apache2/mods-enabled \
+    && ln -s ../mods-available/rewrite.load
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
