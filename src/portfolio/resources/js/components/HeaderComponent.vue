@@ -1,5 +1,5 @@
 <template>
-    <div class>
+    <div>
         <v-app-bar>
             Webアプリ名
         </v-app-bar>

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <FavoriteListComponent class="mb-5" />
+        <v-divider class="mb-4"></v-divider>
+        <h1 class="mb-4">2022年 春アニメ</h1>
         <v-row fill-height>
             <v-col
                 v-for="anime in animes"
@@ -29,6 +32,7 @@
                         <v-btn
                             color="primary"
                             elevation="6"
+                            @click="resistFavorite(anime.id)"
                         >
                         お気に入り登録
                         </v-btn>
@@ -40,7 +44,13 @@
 </template>
 
 <script>
+
+    import FavoriteListComponent from '../components/FavoriteListComponent.vue'
+
     export default {
+         components: {
+            FavoriteListComponent,
+        },
         data() {
             return {
                 animes: []
@@ -51,6 +61,12 @@
                 axios.get('/api/animes')
                     .then((res) => {
                         this.animes = res.data;
+                    });
+            },
+            resistFavorite(anime_id) {
+                axios.put('api/animes/' + anime_id + '/favorite')
+                    .then((res) => {
+                        this.$router.go({path: this.$router.currentRoute.path, force: true})
                     });
             }
         },

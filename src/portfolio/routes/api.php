@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +16,12 @@ use App\Http\Controllers\AnimeController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::get('/animes', [AnimeController::class, 'index'])->name('anime.index');
 Route::get('/animes/{id}', [AnimeController::class, 'show'])->name('anime.show');
+
+Route::get('/animes/favorite', [FavoriteController::class, 'index']);
+Route::put('/animes/{anime_id}/favorite', [FavoriteController::class, 'store']);
