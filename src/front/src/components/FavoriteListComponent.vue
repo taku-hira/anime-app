@@ -48,16 +48,15 @@ export default {
         }
     },
     methods: {
-        getAnimes() {
-            axios.get('/api/animes/favorite')
+        getFavoriteAnimes() {
+            this.$axios.get('http://localhost:8888/api/animes/favorite')
                 .then((res) => {
                     this.favorites = res.data;
                 });
         }
+    },
+    mounted() {
+        this.getFavoriteAnimes();
     }
 }
 </script>
-
-<style>
-
-</style>

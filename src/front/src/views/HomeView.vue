@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FavoriteListComponent class="mb-5" />
+        <favorite-list-component class="mb-5" />
         <v-divider class="mb-4"></v-divider>
         <h1 class="mb-4">2022年 春アニメ</h1>
         <v-row fill-height>
@@ -44,13 +44,9 @@
 </template>
 
 <script>
-
-    import FavoriteListComponent from '../components/FavoriteListComponent.vue'
-
+import FavoriteListComponent from '../components/FavoriteListComponent.vue';
     export default {
-         components: {
-            FavoriteListComponent,
-        },
+  components: { FavoriteListComponent },
         data() {
             return {
                 animes: []
@@ -58,14 +54,14 @@
         },
         methods: {
             getAnimes() {
-                axios.get('/api/animes')
+                this.$axios.get('http://localhost:8888/api/animes')
                     .then((res) => {
                         this.animes = res.data;
                     });
             },
             resistFavorite(anime_id) {
-                axios.put('api/animes/' + anime_id + '/favorite')
-                    .then((res) => {
+                this.$axios.put('http://localhost:8888/api/animes/' + anime_id + '/favorite')
+                    .then(() => {
                         this.$router.go({path: this.$router.currentRoute.path, force: true})
                     });
             }
