@@ -43,7 +43,7 @@
         },
         methods: {
             getAnime() {
-                axios.get('/api/animes/' + this.$route.params.id)
+                this.$axios.get('http://localhost:8888/api/animes/' + this.$route.params.id)
                     .then((res) => {
                         this.anime = res.data;
                     });
