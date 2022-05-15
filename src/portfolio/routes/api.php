@@ -25,3 +25,4 @@ Route::get('/animes/{id}', [AnimeController::class, 'show'])->where('id', '[0-9]
 
 Route::get('/animes/favorite', [FavoriteController::class, 'index'])->name('favorite.index');
 Route::put('/animes/{anime_id}/favorite', [FavoriteController::class, 'store'])->name('favorite.store');
+Route::delete('/animes/{anime_id}/favorite', [FavoriteController::class, 'destroy'])->name('favorite.destroy');

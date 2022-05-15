@@ -18,10 +18,17 @@ class FavoriteController extends Controller
     public function store($anime_id)
     {
         $user_id = 1;
-        $favorite = new Favorite();
-        $favorite->user_id = $user_id;
-        $favorite->anime_id = $anime_id;
-        $favorite->save();
-        return $favorite;
+        $user = User::findOrFail($user_id);
+        $user->favorites()->detach($anime_id);
+        $user->favorites()->attach($anime_id);
+        return $user;
+    }
+
+    public function destroy($anime_id)
+    {
+        $user_id = 1;
+        $user = User::findOrFail($user_id);
+        $user->favorites()->detach($anime_id);
+        return $user;
     }
 }
