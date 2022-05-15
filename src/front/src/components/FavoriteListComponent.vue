@@ -4,7 +4,7 @@
         <v-row fill-height>
             <v-col
                 v-for="favorite in favorites"
-                :key="favorite.id"
+                :key="favorite.pivot_id"
                 cols="12"
                 sm="3"
             >
@@ -18,7 +18,7 @@
                     ></v-img>
                     <v-card-title class="justify-center">{{ favorite.title }}</v-card-title>
                     <v-card-actions class="justify-center">
-                        <router-link :to="detail/1">
+                        <router-link :to="`detail/${favorite.id}`">
                             <v-btn
                                 color="primary"
                                 elevation="6"
@@ -30,6 +30,7 @@
                         <v-btn
                             color="primary"
                             elevation="6"
+                            @click="deleteFavorite(favorite.id)"
                         >
                         お気に入り解除
                         </v-btn>
@@ -53,7 +54,13 @@ export default {
                 .then((res) => {
                     this.favorites = res.data;
                 });
-        }
+        },
+        deleteFavorite(anime_id) {
+                this.$axios.delete('http://localhost:8888/api/animes/' + anime_id + '/favorite')
+                    .then(() => {
+                        this.$router.go({path: this.$router.currentRoute.path, force: true})
+                    });
+            }
     },
     mounted() {
         this.getFavoriteAnimes();
