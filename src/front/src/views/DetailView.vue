@@ -41,6 +41,11 @@
                 anime: {}
             }
         },
+         metaInfo () {
+            return {
+                title: this.anime.title
+            }
+        },
         methods: {
             getAnime() {
                 this.$axios.get('http://localhost:8888/api/animes/' + this.$route.params.id)

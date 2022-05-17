@@ -47,6 +47,9 @@
 import FavoriteListComponent from '../components/FavoriteListComponent.vue';
     export default {
         components: { FavoriteListComponent },
+        metaInfo: {
+            title: 'トップページ'
+        },
         data() {
             return {
                 animes: []
