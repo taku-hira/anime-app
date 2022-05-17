@@ -25,7 +25,7 @@
             </div>
             <v-img
                 height="500"
-                src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                :src="anime.img_file_name"
             ></v-img>
         </div>
     </v-container>

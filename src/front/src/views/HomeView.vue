@@ -16,7 +16,7 @@
                 >
                     <v-img
                         height="250"
-                        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                        :src="anime.img_file_name"
                     ></v-img>
                     <v-card-title class="justify-center">{{ anime.title }}</v-card-title>
                     <v-card-actions class="justify-center">
@@ -46,7 +46,7 @@
 <script>
 import FavoriteListComponent from '../components/FavoriteListComponent.vue';
     export default {
-  components: { FavoriteListComponent },
+        components: { FavoriteListComponent },
         data() {
             return {
                 animes: []
