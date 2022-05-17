@@ -14,7 +14,7 @@
                 >
                     <v-img
                         height="250"
-                        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                        :src="favorite.img_file_name"
                     ></v-img>
                     <v-card-title class="justify-center">{{ favorite.title }}</v-card-title>
                     <v-card-actions class="justify-center">
