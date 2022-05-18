@@ -48,6 +48,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Anime::class, 'favorites')
                     ->withPivot('id')
-                    ->withTimestamps();;
+                    ->withTimestamps();
     }
 }
