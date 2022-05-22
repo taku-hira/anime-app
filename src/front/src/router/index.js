@@ -2,12 +2,18 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import DetailView from '@/views/DetailView.vue'
+import TestPage from '@/views/TestPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'test',
+    component: TestPage
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },
