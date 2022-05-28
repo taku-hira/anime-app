@@ -1,6 +1,7 @@
 FROM php:8.1.5-apache
 COPY ./php/php.ini /usr/local/etc/php/
 COPY ./apache/*.conf /etc/apache2/sites-enabled/
+COPY ../src/api var/www/html
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
