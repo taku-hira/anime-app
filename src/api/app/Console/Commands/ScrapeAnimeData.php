@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Http\Controllers\ScrapingController;
 
 class ScrapeAnimeData extends Command
 {
@@ -27,7 +28,7 @@ class ScrapeAnimeData extends Command
      */
     public function handle()
     {
-        echo 10 . PHP_EOL;
-        return 0;
+        $scraping = new ScrapingController();
+        $scraping->getAnimeData();
     }
 }

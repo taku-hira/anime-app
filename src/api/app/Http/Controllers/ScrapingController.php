@@ -56,4 +56,9 @@ class ScrapingController extends Controller
             $anime->save();
         }
     }
+
+    function test ()
+    {
+        echo 10 . PHP_EOL;
+    }
 }
