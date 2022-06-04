@@ -57,13 +57,13 @@ import FavoriteListComponent from '../components/FavoriteListComponent.vue';
         },
         methods: {
             getAnimes() {
-                this.$axios.get('http://localhost:8888/api/animes')
+                this.$axios.get('/api/animes')
                     .then((res) => {
                         this.animes = res.data;
                     });
             },
             resistFavorite(anime_id) {
-                this.$axios.put('http://localhost:8888/api/animes/' + anime_id + '/favorite')
+                this.$axios.put('/api/animes/' + anime_id + '/favorite')
                     .then(() => {
                         this.$router.go({path: this.$router.currentRoute.path, force: true})
                     });

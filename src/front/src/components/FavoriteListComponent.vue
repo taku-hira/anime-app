@@ -50,13 +50,13 @@ export default {
     },
     methods: {
         getFavoriteAnimes() {
-            this.$axios.get('http://localhost:8888/api/animes/favorite')
+            this.$axios.get('/api/animes/favorite')
                 .then((res) => {
                     this.favorites = res.data;
                 });
         },
         deleteFavorite(anime_id) {
-                this.$axios.delete('http://localhost:8888/api/animes/' + anime_id + '/favorite')
+                this.$axios.delete('/api/animes/' + anime_id + '/favorite')
                     .then(() => {
                         this.$router.go({path: this.$router.currentRoute.path, force: true})
                     });
