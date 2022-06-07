@@ -7,7 +7,7 @@
                     {{ anime.summary }}
                 </p>
 
-                    <router-link to="/">
+                    <router-link to="/home">
                         <v-btn
                             color="primary"
                             elevation="6"
