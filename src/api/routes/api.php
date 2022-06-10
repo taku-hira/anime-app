@@ -16,13 +16,14 @@ use App\Http\Controllers\FavoriteController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-Route::get('/animes', [AnimeController::class, 'index'])->name('anime.index');
-Route::get('/animes/{id}', [AnimeController::class, 'show'])->where('id', '[0-9]+')->name('anime.show');
-
-Route::get('/animes/favorite', [FavoriteController::class, 'index'])->name('favorite.index');
-Route::put('/animes/{anime_id}/favorite', [FavoriteController::class, 'store'])->name('favorite.store');
-Route::delete('/animes/{anime_id}/favorite', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::get('/animes', [AnimeController::class, 'index'])->name('anime.index');
+    Route::get('/animes/{id}', [AnimeController::class, 'show'])->where('id', '[0-9]+')->name('anime.show');
+    Route::get('/animes/favorite', [FavoriteController::class, 'index'])->name('favorite.index');
+    Route::put('/animes/{anime_id}/favorite', [FavoriteController::class, 'store'])->name('favorite.store');
+    Route::delete('/animes/{anime_id}/favorite', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
+});

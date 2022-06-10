@@ -9,6 +9,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
 axios.defaults.baseURL = process.env.VUE_APP_API_ORIGIN
+axios.defaults.withCredentials = true;
 Vue.use(VueMeta)
 
 new Vue({
