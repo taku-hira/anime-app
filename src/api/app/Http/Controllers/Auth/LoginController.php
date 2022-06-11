@@ -22,4 +22,10 @@ class LoginController extends Controller
             return response()->json(['message' => 'ログイン失敗しました'], 403);
         }
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return response()->json(['message' => 'ログアウトしました'], 200);
+    }
 }

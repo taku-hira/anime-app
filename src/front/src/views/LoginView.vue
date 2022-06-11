@@ -6,6 +6,7 @@
           <h1 class="display-1">ログイン</h1>
         </v-card-title>
         <v-card-text>
+          {{ message }}
           <form @submit.prevent="login">
             <v-text-field
               v-model="input.email"
@@ -15,6 +16,7 @@
             <v-text-field
               v-model="input.password"
               label="password"
+              type="password"
               required
             ></v-text-field>
             <v-btn
@@ -24,7 +26,12 @@
               ログイン
             </v-btn>
           </form>
-          {{ message }}
+          <v-btn
+            class="mr-4"
+            @click="logout"
+          >
+            ログアウト
+          </v-btn>
         </v-card-text>
       </v-card>
     </v-main>
@@ -54,13 +61,21 @@ export default {
           email: this.input.email,
           password: this.input.password},
           { withCredentials: true }
-        ).then((res) => {
-            this.user = res.data.user
-            this.status = res.data.status
-            this.message = res.data.message
+        )
+        .then((res) => {
+            console.log(res.data)
+            this.$router.push('/home')
+        })
+        .catch((error) => {
+          this.message = error.response.data.message
         })
       })
-    }
+    },
+    logout() {
+      this.$axios.post('/logout').then((res) => {
+        this.message = res.data.message
+      })
+    },
   }
 
 }
