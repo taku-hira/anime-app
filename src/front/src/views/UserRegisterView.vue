@@ -17,11 +17,13 @@
               label="e-mail"
               required
             ></v-text-field>
-            <v-text-field
-              v-model="input.prefecture_id"
+            <v-select
+              v-model="input.prefecture"
+              item-text="name"
+              item-value="id"
+              :items="prefectures"
               label="都道府県"
-              required
-            ></v-text-field>
+            ></v-select>
             <v-text-field
               v-model="input.password"
               label="password"
@@ -51,13 +53,24 @@ export default {
       input: {
         'name': '',
         'email': '',
-        'prefecture_id': '',
+        'prefecture': '',
         'password': '',
       },
       status: '',
       message: '',
-      user: '',
+      prefectures: [],
     }
   },
+  methods: {
+    getPrefecture() {
+      this.$axios.get('/api/prefectures')
+        .then((res) => {
+            this.prefectures = res.data;
+        });
+    }
+  },
+  mounted() {
+    this.getPrefecture()
+  }
 }
 </script>
