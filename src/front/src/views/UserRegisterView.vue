@@ -72,8 +72,7 @@ export default {
           },
           { withCredentials: true }
         )
-        .then((res) => {
-            console.log(res.data)
+        .then(() => {
             this.$router.push('/home')
         })
         .catch((error) => {

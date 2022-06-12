@@ -3,7 +3,7 @@
     <v-main>
       <v-card width="400px" class="mx-auto mt-5">
         <v-card-title>
-          <h1 class="display-1">ログイン</h1>
+          <h1 class="display-1">Let's Sign In</h1>
         </v-card-title>
         <v-card-text>
           {{ message }}
@@ -23,15 +23,9 @@
               class="mr-4"
               type="submit"
             >
-              ログイン
+              Sign IN
             </v-btn>
           </form>
-          <v-btn
-            class="mr-4"
-            @click="logout"
-          >
-            ログアウト
-          </v-btn>
         </v-card-text>
       </v-card>
     </v-main>
@@ -62,19 +56,12 @@ export default {
           password: this.input.password},
           { withCredentials: true }
         )
-        .then((res) => {
-            console.log(res.data)
+        .then(() => {
             this.$router.push('/home')
         })
         .catch((error) => {
-          console.log(error.response)
           this.message = error.response.data.message
         })
-      })
-    },
-    logout() {
-      this.$axios.post('/logout').then((res) => {
-        this.message = res.data.message
       })
     },
   }
