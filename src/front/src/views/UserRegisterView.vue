@@ -6,7 +6,7 @@
           <h1 class="display-1">Let's Sign UP!</h1>
         </v-card-title>
         <v-card-text>
-          <form @submit.prevent="login">
+          <form @submit.prevent="register">
             <v-text-field
               v-model="input.name"
               label="name"
@@ -62,6 +62,26 @@ export default {
     }
   },
   methods: {
+    register() {
+      this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
+        this.$axios.post('/register', {
+          name: this.input.name,
+          email: this.input.email,
+          prefecture_id: this.input.prefecture,
+          password: this.input.password,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+            console.log(res.data)
+            this.$router.push('/home')
+        })
+        .catch((error) => {
+          console.log(error.response)
+          this.message = error.response.data.message
+        })
+      })
+    },
     getPrefecture() {
       this.$axios.get('/api/prefectures')
         .then((res) => {
