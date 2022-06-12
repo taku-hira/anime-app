@@ -3,6 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: [
     'vuetify'
   ],
+
   devServer: {
     proxy: {
       '^/api/': {
@@ -10,6 +11,21 @@ module.exports = defineConfig({
           logLevel: 'debug',
           pathRewrite: { "^/api/": "/api/" }
       }
+    }
+  },
+
+  pluginOptions: {
+    s3Deploy: {
+      registry: undefined,
+      region: 'ap-northeast-1',
+      bucket: 'anitify.com',
+      assetPath: 'dist',
+      deployPath: '/dist',
+      pwa: false,
+      enableCloudfront: true,
+      cloudfrontId: 'E3AV9YJY7ME6YG',
+      cloudfrontMatchers: '/*',
+      uploadConcurrency: 5
     }
   }
 })

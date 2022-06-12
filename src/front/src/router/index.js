@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import DetailView from '@/views/DetailView.vue'
 import TestPage from '@/views/TestPage.vue'
+import LoginView from '@/views/LoginView.vue'
+import UserRegisterView from '@/views/UserRegisterView.vue'
 
 Vue.use(VueRouter)
 
@@ -20,10 +22,17 @@ const routes = [
   {
     path: '/detail/:id',
     name: 'detail',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: DetailView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: UserRegisterView
   }
 ]
 
