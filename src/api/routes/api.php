@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\PrefectureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,5 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::put('/animes/{anime_id}/favorite', [FavoriteController::class, 'store'])->name('favorite.store');
     Route::delete('/animes/{anime_id}/favorite', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
 });
+
+Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);

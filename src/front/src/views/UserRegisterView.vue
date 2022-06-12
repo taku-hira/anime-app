@@ -3,16 +3,27 @@
     <v-main>
       <v-card width="400px" class="mx-auto mt-5">
         <v-card-title>
-          <h1 class="display-1">Let's Sign In</h1>
+          <h1 class="display-1">Let's Sign UP!</h1>
         </v-card-title>
         <v-card-text>
-          {{ message }}
-          <form @submit.prevent="login">
+          <form @submit.prevent="register">
+            <v-text-field
+              v-model="input.name"
+              label="name"
+              required
+            ></v-text-field>
             <v-text-field
               v-model="input.email"
               label="e-mail"
               required
             ></v-text-field>
+            <v-select
+              v-model="input.prefecture"
+              item-text="name"
+              item-value="id"
+              :items="prefectures"
+              label="都道府県"
+            ></v-select>
             <v-text-field
               v-model="input.password"
               label="password"
@@ -23,7 +34,7 @@
               class="mr-4"
               type="submit"
             >
-              Sign IN
+              Sign up
             </v-btn>
           </form>
         </v-card-text>
@@ -35,36 +46,50 @@
 <script>
 export default {
   metaInfo: {
-    title: 'ログイン'
+    title: 'Sign up'
     },
   data(){
     return {
       input: {
+        'name': '',
         'email': '',
+        'prefecture': '',
         'password': '',
       },
       status: '',
       message: '',
-      user: '',
+      prefectures: [],
     }
   },
   methods: {
-    login() {
+    register() {
       this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
-        this.$axios.post('/login', {
+        this.$axios.post('/register', {
+          name: this.input.name,
           email: this.input.email,
-          password: this.input.password},
+          prefecture_id: this.input.prefecture,
+          password: this.input.password,
+          },
           { withCredentials: true }
         )
         .then(() => {
             this.$router.push('/home')
         })
         .catch((error) => {
+          console.log(error.response)
           this.message = error.response.data.message
         })
       })
     },
+    getPrefecture() {
+      this.$axios.get('/api/prefectures')
+        .then((res) => {
+            this.prefectures = res.data;
+        });
+    }
+  },
+  mounted() {
+    this.getPrefecture()
   }
-
 }
 </script>
