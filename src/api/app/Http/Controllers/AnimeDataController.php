@@ -7,7 +7,7 @@ use Goutte\Client;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Models\Anime;
 
-class ScrapingController extends Controller
+class AnimeDataController extends Controller
 {
     public function getAnimeData()
     {
