@@ -3,23 +3,23 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\AnimeDataController;
+use App\Http\Controllers\OnAirDataController;
 
-class ScrapeAnimeData extends Command
+class scrapeOnAirData extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'scrape:animeData';
+    protected $signature = 'scrape:onAirData';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'scrape animeData';
+    protected $description = 'Get On Air Data';
 
     /**
      * Execute the console command.
@@ -28,7 +28,7 @@ class ScrapeAnimeData extends Command
      */
     public function handle()
     {
-        $scraping = new AnimeDataController();
-        $scraping->getAnimeData();
+        $scraping = new OnAirDataController();
+        $scraping->getOnAirData();
     }
 }
