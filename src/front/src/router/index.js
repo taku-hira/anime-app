@@ -17,12 +17,18 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: {
+      isLogin: true
+    }
   },
   {
     path: '/detail/:id',
     name: 'detail',
-    component: DetailView
+    component: DetailView,
+    meta: {
+      isLogin: true
+    }
   },
   {
     path: '/login',
@@ -40,6 +46,22 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+function isAuth() {
+  return localStorage.getItem("isAuth");
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.isLogin)) {
+    if (!isAuth()) {
+        next("/login");
+    } else {
+        next();
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

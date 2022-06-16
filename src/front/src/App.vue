@@ -1,14 +1,14 @@
 <template>
     <div>
-      <header>
-        <header-component />
-      </header>
       <v-app>
-          <v-main>
-              <v-container>
-                <router-view />
-              </v-container>
-          </v-main>
+        <header>
+          <header-component />
+        </header>
+        <v-main>
+            <v-container>
+              <router-view />
+            </v-container>
+        </v-main>
       </v-app>
     </div>
 </template>
