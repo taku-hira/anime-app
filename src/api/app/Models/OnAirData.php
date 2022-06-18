@@ -10,7 +10,8 @@ class OnAirData extends Model
     use HasFactory;
 
     protected $fillable = [
-        'on_air_data',
+        'anime_id',
+        'on_air_date',
         'on_air_info',
     ];
 }
