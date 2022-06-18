@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Goutte\Client;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Http\Controllers\AnimeDataController;
+use App\Models\OnAirData;
+use App\Models\Anime;
 
 class OnAirDataController extends Controller
 {
@@ -17,17 +19,30 @@ class OnAirDataController extends Controller
         $anime_url = $get_url->getUrl($client);
         foreach ($anime_url as $url) {
             $crawler = $client->request('GET', $url);
-            // $on_air_day = $this->getOnAirDay($crawler);
-            // $on_air_time = $this->getOnAirTime($crawler);
-            $data[] = [
-                'on_air_day' => $this->getOnAirDay($crawler),
-                'on_air_time' => $this->getOnAirTime($crawler),
+            $title = $get_url->getTitle($crawler);
+            $anime_on_air_data[$title[0]] = [
+                $this->getOnAir($crawler)
             ];
         }
-        dd($data);
+        foreach ($anime_on_air_data as $key => $on_air_data) {
+            foreach($on_air_data as $data) {
+                foreach ($data as $value) {
+                    $title_list[] = $key;
+                    $info_list[] = $value;
+                }
+            }
+        }
+        $format_data = array_map(array($this, 'splitCharacters'), $info_list);
+        foreach ($format_data as $on_air_data) {
+            foreach ($on_air_data as $key => $data) {
+                $on_air_date_list[] = $key;
+                $on_air_info_list[] = $data;
+            }
+        }
+        $this->insertOnAirdata($title_list, $on_air_date_list, $on_air_info_list);
     }
 
-    function getOnAir($crawler)
+    public function getOnAir($crawler)
     {
         $anime_on_air_day = $crawler->filter('.tvScheList')->each(function ($element) {
             if ($element->count() > 0) {
@@ -37,24 +52,26 @@ class OnAirDataController extends Controller
         return $anime_on_air_day;
     }
 
-    function getOnAirDay($crawler)
+    public function splitCharacters($string)
     {
-        $anime_on_air_day = $crawler->filter('.tvScheListDate')->each(function ($element) {
-            if ($element->count() > 0) {
-                return $element->filter('.tvScheListDate')->text();
-            }
-        });
-        return $anime_on_air_day;
+        $on_air_date = mb_substr($string, 0, 5);
+        $on_air_info = mb_substr($string, 9);
+        $on_air_date = str_replace('月', '-', $on_air_date);
+        $on_air_date = str_replace('日', '', $on_air_date);
+        return [$on_air_date => $on_air_info];
     }
 
-    function getOnAirTime($crawler)
+    public function insertOnAirdata($title, $date, $info)
     {
-        $anime_on_air_time = $crawler->filter('.tvScheList')->filter('.clearfix')->each(function ($element) {
-            if ($element->count() > 0) {
-                return $element->filter('.tvScheTime')->text();
-            }
-        });
-        return $anime_on_air_time;
+        $params =[];
+        for ($i = 0; $i < count($title); $i ++) {
+            $anime_title = Anime::where('title', '=', $title[$i])->first();
+            $params[] = [
+                'anime_id' => $anime_title->id,
+                'on_air_date' => date('Y-m-d', strtotime('2022-' . $date[$i])),
+                'on_air_info' => $info[$i],
+            ];
+        }
+        OnAirData::upsert($params, 'id');
     }
-
 }
