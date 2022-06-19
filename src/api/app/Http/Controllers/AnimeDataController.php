@@ -31,7 +31,7 @@ class AnimeDataController extends Controller
 
     public function getUrl($client)
     {
-        $crawler = $client->request('GET', 'https://anime.eiga.com/program/');
+        $crawler = $client->request('GET', 'https://anime.eiga.com/program/season/2022-spring/');
         $anime_url = $crawler->filter('.animeSeasonBox')->each(function ($element) {
             return 'https://anime.eiga.com' . $element->filter('a')->attr('href');
         });
@@ -77,7 +77,7 @@ class AnimeDataController extends Controller
             $anime = new Anime();
             $anime->title = $data['title'][0];
             $anime->summary = $data['summary'][0];
-            $anime->img_file_name = $data['img'][0];
+            $anime->img_file_name = $data['img_url'][0];
             $anime->save();
         }
     }
