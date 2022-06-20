@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Http\Controllers\NotificationEmailController;
 
 class sendEmail extends Command
 {
@@ -11,14 +12,14 @@ class sendEmail extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'send:email';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'send email';
 
     /**
      * Execute the console command.
@@ -27,6 +28,7 @@ class sendEmail extends Command
      */
     public function handle()
     {
-        return 0;
+        $notification = new NotificationEmailController;
+        $notification->send();
     }
 }

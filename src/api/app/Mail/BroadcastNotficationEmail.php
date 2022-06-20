@@ -16,9 +16,13 @@ class BroadcastNotficationEmail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name, $email, $title, $on_air_data, $on_air_info)
     {
-        //
+        $this->name = $name;
+        $this->email = $email;
+        $this->title = $title;
+        $this->on_air_date = $on_air_data;
+        $this->on_air_info = $on_air_info;
     }
 
     /**
@@ -28,6 +32,14 @@ class BroadcastNotficationEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->to($this->email)
+            ->subject($this->title . '放送通知')
+            ->view('emails.notification')
+            ->with([
+                'name' => $this->name,
+                'title' => $this->title,
+                'on_air_date' => $this->on_air_date,
+                'on_air_info' => $this->on_air_info,
+            ]);
     }
 }
