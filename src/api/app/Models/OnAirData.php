@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Anime;
 
 class OnAirData extends Model
 {
@@ -14,4 +15,9 @@ class OnAirData extends Model
         'on_air_date',
         'on_air_info',
     ];
+
+    public function anime()
+    {
+        return $this->belongsTo(Anime::class);
+    }
 }
