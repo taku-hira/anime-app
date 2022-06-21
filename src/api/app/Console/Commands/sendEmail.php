@@ -28,7 +28,7 @@ class sendEmail extends Command
      */
     public function handle()
     {
-        $notification = new NotificationEmailController;
+        $notification = new NotificationEmailController();
         $notification->send();
     }
 }
