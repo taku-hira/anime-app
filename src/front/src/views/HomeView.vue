@@ -15,7 +15,6 @@
                     class="height-400"
                 >
                     <v-img
-                        height="250"
                         :src="anime.img_file_name"
                     ></v-img>
                     <v-card-title class="justify-center">{{ anime.title }}</v-card-title>
