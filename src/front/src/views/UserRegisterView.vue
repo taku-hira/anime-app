@@ -73,6 +73,7 @@ export default {
           { withCredentials: true }
         )
         .then(() => {
+            localStorage.setItem("isAuth", "ture");
             this.$router.push('/home')
         })
         .catch((error) => {
