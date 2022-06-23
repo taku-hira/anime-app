@@ -14,21 +14,14 @@
         <v-card
         max-width="300"
         >
-          <v-img
-          class="height-200"
-          :src="anime.img_file_name"
-          ></v-img>
+          <router-link :to="`detail/${anime.id}`">
+            <v-img
+            class="height-200"
+            :src="anime.img_file_name"
+            ></v-img>
+          </router-link>
           <v-card-title class="justify-center">{{ anime.title }}</v-card-title>
           <v-card-actions class="justify-center">
-            <router-link :to="`detail/${anime.id}`">
-              <v-btn
-              color="primary"
-              elevation="6"
-              class="mr-2"
-              >
-                詳細
-              </v-btn>
-            </router-link>
             <v-btn
             color="primary"
             elevation="6"

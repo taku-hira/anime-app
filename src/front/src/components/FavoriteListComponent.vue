@@ -13,21 +13,14 @@
       max-width="300"
       class="height-400"
       >
-        <v-img
-        height="250"
-        :src="favorite.img_file_name"
-        ></v-img>
+        <router-link :to="`detail/${favorite.id}`">
+          <v-img
+          height="250"
+          :src="favorite.img_file_name"
+          ></v-img>
+        </router-link>
         <v-card-title class="justify-center">{{ favorite.title }}</v-card-title>
         <v-card-actions class="justify-center">
-          <router-link :to="`detail/${favorite.id}`">
-            <v-btn
-            color="primary"
-            elevation="6"
-            class="mr-2"
-            >
-              詳細
-            </v-btn>
-          </router-link>
           <v-btn
           color="primary"
           elevation="6"
