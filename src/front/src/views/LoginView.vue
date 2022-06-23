@@ -6,7 +6,9 @@
           <h1 class="display-1">Let's Sign In</h1>
         </v-card-title>
         <v-card-text>
+          <div class="err_msg">
           {{ message }}
+          </div>
           <form @submit.prevent="login">
             <v-text-field
               v-model="input.email"
@@ -23,7 +25,7 @@
               class="mr-4"
               type="submit"
             >
-              Sign IN
+              ログイン
             </v-btn>
           </form>
         </v-card-text>
@@ -31,6 +33,12 @@
     </v-main>
   </v-app>
 </template>
+
+<style>
+  .err_msg {
+    color: red;
+  }
+</style>
 
 <script>
 export default {

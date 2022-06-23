@@ -13,7 +13,8 @@
 export default {
   data () {
     return {
-      drawer: false
+      drawer: false,
+      
     }
   },
   methods: {
@@ -24,7 +25,9 @@ export default {
         this.$router.push("/login");
       })
     },
-
+    isAuth() {
+      return localStorage.getItem("isAuth");
+    }
   }
 }
 </script>
