@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import DetailView from '@/views/DetailView.vue'
-import TestPage from '@/views/TestPage.vue'
+import TopPage from '@/views/TopPage.vue'
 import LoginView from '@/views/LoginView.vue'
 import UserRegisterView from '@/views/UserRegisterView.vue'
 
@@ -11,8 +11,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'test',
-    component: TestPage
+    name: 'top',
+    component: TopPage
   },
   {
     path: '/home',
