@@ -9,8 +9,8 @@ class AnimeController extends Controller
 {
     public function index()
     {
-        $anime_list = Anime::all();
-        return $anime_list;
+        $anime_list = Anime::with('favoriteUsers')->get();
+        return response()->json($anime_list);
     }
 
     public function show($id)
