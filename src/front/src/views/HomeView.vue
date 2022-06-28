@@ -9,28 +9,28 @@
       md="3"
       sm="6"
       >
-        <router-link :to="`detail/${anime.id}`">
-          <v-card
-          max-width="300"
-          >
-            <v-img
-            class="height-200"
-            :src="anime.img_file_name"
-            ></v-img>
-            <v-card-title class="justify-center">{{ anime.title }}</v-card-title>
-            <v-card-actions class="justify-center">
-              <v-layout class="justify-center">
-                <v-icon
-                large
-                :class="{ 'pink--text': anime.favorite_by_user }"
-                @click.prevent="onFavoriteClick(anime)"
-                >
-                mdi-heart
-                </v-icon>
-              </v-layout>
-            </v-card-actions>
-          </v-card>
-        </router-link>
+        <v-card
+        class="py-4"
+        :to="`detail/${anime.id}`">
+          <v-card-title class="justify-center">{{ anime.title }}</v-card-title>
+          <v-layout class="justify-center">
+            <v-btn
+            @click.prevent="openLink(anime)"
+            >
+              オフィシャルサイト
+              <v-icon>mdi-open-in-new</v-icon>
+            </v-btn>
+          </v-layout>
+          <v-layout class="justify-center mt-4">
+            <v-icon
+            large
+            :class="{ 'pink--text': anime.favorite_by_user }"
+            @click.prevent="onFavoriteClick(anime)"
+            >
+            mdi-heart
+            </v-icon>
+          </v-layout>
+        </v-card>
       </v-col>
     </v-row>
   </div>
@@ -56,7 +56,6 @@
       getAnimes() {
         this.$axios.get('/api/animes')
           .then((res) => {
-            console.log(res)
             this.animes = res.data;
           })
           .catch(() => {
@@ -88,6 +87,9 @@
         } else {
           this.favorite(anime)
         }
+      },
+      openLink(anime) {
+        window.open(anime.official_site_url, '_blank')
       }
     },
     mounted() {

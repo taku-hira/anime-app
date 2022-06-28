@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('anime_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->date('on_air_date');
             $table->string('on_air_info');
+            $table->foreignId('prefecture_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
