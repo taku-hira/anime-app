@@ -14,8 +14,9 @@ class Anime extends Model
 
     protected $fillable = [
         'title',
-        'img_file_name',
+        'official_site_url',
         'summary',
+        'on_air_season',
     ];
 
     protected $appends = [

@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('animes', function (Blueprint $table) {
             $table->id();
             $table->string('title', 100);
-            $table->string('img_file_name');
+            $table->string('official_site_url')->nullable();
             $table->text('summary');
+            $table->text('on_air_season');
             $table->timestamps();
         });
     }

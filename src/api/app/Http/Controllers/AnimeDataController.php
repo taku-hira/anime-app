@@ -7,6 +7,8 @@ use Goutte\Client;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Models\Anime;
 
+use function PHPUnit\Framework\at;
+
 class AnimeDataController extends Controller
 {
     public function getAnimeData()
@@ -17,13 +19,14 @@ class AnimeDataController extends Controller
         foreach ($anime_url as $url) {
             $crawler = $client->request('GET', $url);
             $anime_title = $this->getTitle($crawler);
+            $official_site_url = $this->getOfficialUrl($crawler);
             $anime_summary = $this->getSummary($crawler);
-            $anime_img_url = $this->getImageUrl($crawler);
-
+            $on_air_season = $this->getOnAirSeason($crawler);
             $anime_data[] = [
                 'title' => $anime_title,
+                'official_site_url' => $official_site_url,
                 'summary' => $anime_summary,
-                'img_url' => $anime_img_url,
+                'on_air_season' => $on_air_season
             ];
         }
         $this->insertAnimeDb($anime_data);
@@ -61,14 +64,24 @@ class AnimeDataController extends Controller
         return $anime_summary;
     }
 
-    public function getImageUrl($crawler)
+    public function getOfficialUrl($crawler)
     {
-        $anime_img_url = $crawler->filter('.animeTopContainer')->each(function ($element) {
-            if ($element->filter('.animeDetailBox')->filter('.animeDetailImg img')->count() > 0) {
-                return $element->filter('.animeDetailBox')->filter('.animeDetailImg img')->attr('src');
+        $anime_official_url = $crawler->filter('dl#detailLink')->each(function ($element) {
+            if ($element->filter('dd')->filter('.clearfix a')->count() > 0) {
+                return $element->filter('dl#detailLink')->filter('dd')->filter('.clearfix a')->attr('href');
             }
         });
-        return $anime_img_url;
+        return $anime_official_url;
+    }
+
+    public function getOnAirSeason($crawler)
+    {
+        $on_air_season = $crawler->filter('.animeSeasonTag')->each(function ($element) {
+            if ($element->filter('.seasonText a')->count() > 0) {
+                return $element->filter('.seasonText a')->text();
+            }
+        });
+        return $on_air_season;
     }
 
     public function insertAnimeDb($anime_data)
@@ -77,7 +90,12 @@ class AnimeDataController extends Controller
             $anime = new Anime();
             $anime->title = $data['title'][0];
             $anime->summary = $data['summary'][0];
-            $anime->img_file_name = $data['img_url'][0];
+            if (isset($data['official_site_url'][0])) {
+                $anime->official_site_url = $data['official_site_url'][0];
+            } else {
+                $anime->official_site_url = null;
+            }
+            $anime->on_air_season = $data['on_air_season'][0];
             $anime->save();
         }
     }
