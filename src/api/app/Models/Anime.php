@@ -16,6 +16,7 @@ class Anime extends Model
         'title',
         'official_site_url',
         'summary',
+        'img_file_name',
         'on_air_season',
     ];
 
