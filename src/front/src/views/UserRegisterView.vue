@@ -34,7 +34,7 @@
               class="mr-4"
               type="submit"
             >
-              Sign up
+              ユーザー登録
             </v-btn>
           </form>
         </v-card-text>
@@ -46,7 +46,7 @@
 <script>
 export default {
   metaInfo: {
-    title: 'Sign up'
+    title: 'ユーザー登録'
     },
   data(){
     return {
