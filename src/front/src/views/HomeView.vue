@@ -12,16 +12,9 @@
         <v-card
         class="py-4"
         :to="`detail/${anime.id}`">
+          <v-img max-height="350" :src="anime.img_file_name"></v-img>
           <v-card-title class="justify-center">{{ anime.title }}</v-card-title>
           <v-layout class="justify-center">
-            <v-btn
-            @click.prevent="openLink(anime)"
-            >
-              オフィシャルサイト
-              <v-icon>mdi-open-in-new</v-icon>
-            </v-btn>
-          </v-layout>
-          <v-layout class="justify-center mt-4">
             <v-icon
             large
             :class="{ 'pink--text': anime.favorite_by_user }"
@@ -29,6 +22,15 @@
             >
             mdi-heart
             </v-icon>
+          </v-layout>
+          <v-layout class="justify-center">
+            <v-btn
+            @click.prevent="openLink(anime)"
+            class="text-caption mt-4"
+            >
+              オフィシャルサイトへ
+              <v-icon x-small>mdi-open-in-new</v-icon>
+            </v-btn>
           </v-layout>
         </v-card>
       </v-col>
