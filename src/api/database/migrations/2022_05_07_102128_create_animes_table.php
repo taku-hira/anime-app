@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title', 100);
             $table->string('official_site_url')->nullable();
             $table->text('summary');
+            $table->string('img_file_name');
             $table->text('on_air_season');
             $table->timestamps();
         });

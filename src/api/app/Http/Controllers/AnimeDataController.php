@@ -21,11 +21,13 @@ class AnimeDataController extends Controller
             $anime_title = $this->getTitle($crawler);
             $official_site_url = $this->getOfficialUrl($crawler);
             $anime_summary = $this->getSummary($crawler);
+            $anime_img_url = $this->getImageUrl($crawler);
             $on_air_season = $this->getOnAirSeason($crawler);
             $anime_data[] = [
                 'title' => $anime_title,
                 'official_site_url' => $official_site_url,
                 'summary' => $anime_summary,
+                'img_file_name' => $anime_img_url,
                 'on_air_season' => $on_air_season
             ];
         }
@@ -74,6 +76,16 @@ class AnimeDataController extends Controller
         return $anime_official_url;
     }
 
+    public function getImageUrl($crawler)
+    {
+        $anime_img_url = $crawler->filter('.animeTopContainer')->each(function ($element) {
+            if ($element->filter('.animeDetailBox')->filter('.animeDetailImg img')->count() > 0) {
+                return $element->filter('.animeDetailBox')->filter('.animeDetailImg img')->attr('src');
+            }
+        });
+        return $anime_img_url;
+    }
+
     public function getOnAirSeason($crawler)
     {
         $on_air_season = $crawler->filter('.animeSeasonTag')->each(function ($element) {
@@ -95,6 +107,7 @@ class AnimeDataController extends Controller
             } else {
                 $anime->official_site_url = null;
             }
+            $anime->img_file_name = $data['img_file_name'][0];
             $anime->on_air_season = $data['on_air_season'][0];
             $anime->save();
         }
