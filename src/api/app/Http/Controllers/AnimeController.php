@@ -7,9 +7,16 @@ use App\Models\Anime;
 
 class AnimeController extends Controller
 {
-    public function index()
+    const SEASONS = [
+        1 => '2022年春アニメ',
+        2 => '2022年夏アニメ',
+        3 => '2022年冬アニメ',
+    ];
+
+    public function index($season)
     {
-        $anime_list = Anime::with('favoriteUsers')->get();
+
+        $anime_list = Anime::with('favoriteUsers')->where('on_air_season', '=', self::SEASONS[$season])->get();
         return response()->json($anime_list);
     }
 
