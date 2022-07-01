@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h1 class="mb-4">2022年 春アニメ</h1>
+    <v-select
+    v-model="selectedSeason"
+    item-text="name"
+    item-value="id"
+    :items="seasons"
+    label="シーズン"
+    ></v-select>
     <v-row fill-height>
       <v-col
       v-for="anime in animes"
@@ -52,12 +58,25 @@
     data() {
       return {
         animes: [],
+        selectedSeason: 1,
+        seasons: [
+          {id: 1, name: '2022年春アニメ'},
+          {id: 2, name: '2022年夏アニメ'},
+          {id: 3, name: '2022年冬アニメ'},
+        ],
+      }
+    },
+    watch: {
+      selectedSeason : function() {
+        console.log(this.selectedSeason)
+        this.getAnimes()
       }
     },
     methods: {
       getAnimes() {
-        this.$axios.get('/api/animes')
+        this.$axios.get('/api/animes/' + this.selectedSeason)
           .then((res) => {
+            console.log(res)
             this.animes = res.data;
           })
           .catch(() => {
@@ -65,7 +84,7 @@
           })
       },
       favorite(anime) {
-        this.$axios.put('/api/animes/' + anime.id + '/favorite')
+        this.$axios.put('/api/favorite/' + anime.id)
           .then(() => {
             anime.favorite_by_user = true
           })
@@ -74,7 +93,7 @@
           })
       },
       unFavorite(anime) {
-        this.$axios.delete('/api/animes/' + anime.id + '/favorite')
+        this.$axios.delete('/api/favorite/' + anime.id)
           .then(() => {
             anime.favorite_by_user = false
           })

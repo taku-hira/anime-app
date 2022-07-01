@@ -22,11 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function(){
-    Route::get('/animes', [AnimeController::class, 'index'])->name('anime.index');
-    Route::get('/animes/{id}', [AnimeController::class, 'show'])->where('id', '[0-9]+')->name('anime.show');
-    Route::get('/animes/favorite', [FavoriteController::class, 'index'])->name('favorite.index');
-    Route::put('/animes/{anime_id}/favorite', [FavoriteController::class, 'store'])->name('favorite.store');
-    Route::delete('/animes/{anime_id}/favorite', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
+    Route::get('/animes/{season}', [AnimeController::class, 'index'])->name('anime.index');
+    Route::get('/anime/{id}', [AnimeController::class, 'show'])->where('id', '[0-9]+')->name('anime.show');
+    Route::get('/favorite', [FavoriteController::class, 'index'])->name('favorite.index');
+    Route::put('/favorite/{anime_id}', [FavoriteController::class, 'store'])->name('favorite.store');
+    Route::delete('/favorite/{anime_id}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
 });
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);

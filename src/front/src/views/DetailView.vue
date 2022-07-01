@@ -48,7 +48,7 @@
         },
         methods: {
             getAnime() {
-                this.$axios.get('/api/animes/' + this.$route.params.id)
+                this.$axios.get('/api/anime/' + this.$route.params.id)
                     .then((res) => {
                         this.anime = res.data;
                     });
