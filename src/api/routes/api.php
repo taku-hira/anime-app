@@ -30,6 +30,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::delete('/favorite/{anime_id}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
     Route::get('/user', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user', [UserController::class, 'update'])->name('user.update');
+    Route::put('/user/password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 });
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);

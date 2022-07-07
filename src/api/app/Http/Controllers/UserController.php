@@ -39,5 +39,7 @@ class UserController extends Controller
         ]);
         $user = User::findOrFail(Auth::id());
         $user->password = Hash::make($request->password);
+
+        return response()->json($user, 200);
     }
 }
