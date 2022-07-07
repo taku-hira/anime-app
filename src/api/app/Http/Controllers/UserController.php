@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -28,5 +30,14 @@ class UserController extends Controller
         $user->save();
 
         return response()->json($user,200);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', Rules\Password::defaults()],
+        ]);
+        $user = User::findOrFail(Auth::id());
+        $user->password = Hash::make($request->password);
     }
 }
