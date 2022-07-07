@@ -5,17 +5,21 @@
         <v-card-title>
           <h1 class="display-1">Let's Sign UP!</h1>
         </v-card-title>
+        <div class="err_msg">
+          {{ message }}
+        </div>
         <v-card-text>
-          <form @submit.prevent="register">
+          <v-form  ref="form" @submit.prevent="register">
             <v-text-field
               v-model="input.name"
               label="name"
-              required
+              :rules="[required, limit_length]"
+              counter="20"
             ></v-text-field>
             <v-text-field
               v-model="input.email"
               label="e-mail"
-              required
+              :rules="[required, email_check]"
             ></v-text-field>
             <v-select
               v-model="input.prefecture"
@@ -23,12 +27,14 @@
               item-value="id"
               :items="prefectures"
               label="都道府県"
+              :rules="[required,]"
             ></v-select>
             <v-text-field
               v-model="input.password"
-              label="password"
+              label="password(8文字以上)"
               type="password"
-              required
+              :rules="[required, minimum_length]"
+              counter
             ></v-text-field>
             <v-btn
               class="mr-4"
@@ -36,7 +42,7 @@
             >
               ユーザー登録
             </v-btn>
-          </form>
+          </v-form>
         </v-card-text>
       </v-card>
     </v-main>
@@ -59,28 +65,35 @@ export default {
       status: '',
       message: '',
       prefectures: [],
+      required: value => !!value || "必ず入力してください",
+      limit_length: value => value.length <= 20 || "20文字以内で入力してください",
+      minimum_length: value => value.length >= 8 || "8文字以上で入力してください",
+      email_check: value => /.+@.+\..+/.test(value) || 'メールアドレスが不正です'
     }
   },
   methods: {
     register() {
-      this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
-        this.$axios.post('/register', {
-          name: this.input.name,
-          email: this.input.email,
-          prefecture_id: this.input.prefecture,
-          password: this.input.password,
-          },
-          { withCredentials: true }
-        )
-        .then(() => {
-            localStorage.setItem("isAuth", "ture");
-            this.$router.push('/home')
+      if (this.$refs.form.validate()) {
+        this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
+          this.$axios.post('/register', {
+            name: this.input.name,
+            email: this.input.email,
+            prefecture_id: this.input.prefecture,
+            password: this.input.password,
+            },
+            { withCredentials: true }
+          )
+          .then(() => {
+              localStorage.setItem("isAuth", "ture")
+              this.$router.push('/home')
+          })
+          .catch((error) => {
+            this.message = error.response.data.message
+          })
         })
-        .catch((error) => {
-          console.log(error.response)
-          this.message = error.response.data.message
-        })
-      })
+      } else {
+        this.$refs.form.validate()
+      }
     },
     getPrefecture() {
       this.$axios.get('/api/prefectures')

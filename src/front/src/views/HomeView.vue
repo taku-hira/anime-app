@@ -76,7 +76,6 @@
       getAnimes() {
         this.$axios.get('/api/animes/' + this.selectedSeason)
           .then((res) => {
-            console.log(res)
             this.animes = res.data;
           })
           .catch(() => {

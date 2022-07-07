@@ -9,17 +9,17 @@
           <div class="err_msg">
           {{ message }}
           </div>
-          <form @submit.prevent="login">
+          <v-form ref="form" @submit.prevent="login">
             <v-text-field
               v-model="input.email"
               label="e-mail"
-              required
+              :rules="[required, email_check]"
             ></v-text-field>
             <v-text-field
               v-model="input.password"
               label="password"
               type="password"
-              required
+              :rules="[required]"
             ></v-text-field>
             <v-btn
               class="mr-4"
@@ -27,7 +27,7 @@
             >
               ログイン
             </v-btn>
-          </form>
+          </v-form>
         </v-card-text>
       </v-card>
     </v-main>
@@ -54,24 +54,30 @@ export default {
       status: '',
       message: '',
       user: '',
+      required: value => !!value || "必ず入力してください",
+      email_check: value => /.+@.+\..+/.test(value) || 'メールアドレスが不正です'
     }
   },
   methods: {
     login() {
-      this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
-        this.$axios.post('/login', {
-          email: this.input.email,
-          password: this.input.password},
-          { withCredentials: true }
-        )
-        .then(() => {
-            localStorage.setItem("isAuth", "ture");
-            this.$router.push('/home')
+      if (this.$refs.form.validate()) {
+        this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
+          this.$axios.post('/login', {
+            email: this.input.email,
+            password: this.input.password
+            },
+            { withCredentials: true }
+          )
+          .then(() => {
+              localStorage.setItem("isAuth", "ture");
+              this.$router.push('/home')
+          })
+          .catch((error) => {
+            console.log(error)
+            this.message = error.response.data.message
+          })
         })
-        .catch((error) => {
-          this.message = error.response.data.message
-        })
-      })
+      }
     },
   }
 
