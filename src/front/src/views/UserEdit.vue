@@ -9,7 +9,7 @@
           {{ message }}
         </div>
         <v-card-text>
-          <v-form  ref="form" @submit.prevent="register">
+          <v-form  ref="form" @submit.prevent="update">
             <v-text-field
               v-model="input.name"
               label="name"
@@ -64,27 +64,20 @@ export default {
     }
   },
   methods: {
-    register() {
+    update() {
       if (this.$refs.form.validate()) {
-        this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
-          this.$axios.post('/register', {
+          this.$axios.put('/api/user', {
             name: this.input.name,
             email: this.input.email,
             prefecture_id: this.input.prefecture,
-            password: this.input.password,
             },
-            { withCredentials: true }
           )
           .then(() => {
-              localStorage.setItem("isAuth", "ture")
               this.$router.push('/home')
           })
           .catch((error) => {
             this.message = error.response.data.message
           })
-        })
-      } else {
-        this.$refs.form.validate()
       }
     },
     getUser() {
