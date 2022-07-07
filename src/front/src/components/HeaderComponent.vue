@@ -94,12 +94,12 @@ export default {
     logout() {
       this.$axios.post('/logout').then((res) => {
         this.message = res.data.message
-        localStorage.removeItem("isAuth");
-        this.$router.push("/login");
+        localStorage.removeItem("isAuth")
+        this.$router.push("/login")
       })
     },
     isAuth() {
-      return localStorage.getItem("isAuth");
+      return localStorage.getItem("isAuth")
     }
   },
   mounted() {
