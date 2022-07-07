@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user', [UserController::class, 'update'])->name('user.update');
     Route::put('/user/password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+    Route::delete('/user', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);

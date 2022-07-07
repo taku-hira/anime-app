@@ -43,4 +43,11 @@ class UserController extends Controller
 
         return response()->json($user, 200);
     }
+
+    public function destroy()
+    {
+        $user = User::findOrFail(Auth::id());
+        $user->delete();
+        return response()->json(['message' => '削除完了しました'], 200);
+    }
 }
