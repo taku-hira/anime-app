@@ -48,15 +48,20 @@
             <p class="mt-4 mb-0">パスワードの更新はこちらから</p>
           </router-link>
         </v-card-text>
+        <delete-dialog-component />
       </v-card>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import DeleteDialogComponent from '../components/DeleteDialogComponent.vue'
 export default {
   metaInfo: {
     title: 'ユーザー登録'
+    },
+    components: {
+      DeleteDialogComponent,
     },
   data(){
     return {
@@ -90,6 +95,13 @@ export default {
             this.message = error.response.data.message
           })
       }
+    },
+    deleteUser() {
+      this.$axios.delete('/api/user')
+      .then(() => {
+        localStorage.removeItem("isAuth")
+        this.$router.push("/")
+      })
     },
     getUser() {
       this.$axios.get('/api/user')
