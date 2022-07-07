@@ -77,8 +77,7 @@
 export default {
   watch: {
       $route (to, from) {
-        console.log(to, from)
-        if (to.name == 'home' && from.name == 'login') {
+        if (to.name == 'home' && from.name == 'login' || from.name == 'register') {
           this.$axios.get('api/user')
         .then((res) => {
           this.user = res.data
