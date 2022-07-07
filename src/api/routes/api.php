@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/favorite', [FavoriteController::class, 'index'])->name('favorite.index');
     Route::put('/favorite/{anime_id}', [FavoriteController::class, 'store'])->name('favorite.store');
     Route::delete('/favorite/{anime_id}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
-    Route::edit('/user', [UserController::class, 'edit'])->name('user.edit');
+    Route::get('/user', [UserController::class, 'edit'])->name('user.edit');
 });
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);

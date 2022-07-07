@@ -5,6 +5,7 @@ import DetailView from '@/views/DetailView.vue'
 import TopPage from '@/views/TopPage.vue'
 import LoginView from '@/views/LoginView.vue'
 import UserRegisterView from '@/views/UserRegisterView.vue'
+import UserEdit from '@/views/UserEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,14 @@ const routes = [
     path: '/register',
     name: 'register',
     component: UserRegisterView
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: UserEdit,
+    meta: {
+      isLogin: true
+    }
   }
 ]
 
