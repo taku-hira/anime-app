@@ -35,7 +35,18 @@
             >
               更新
             </v-btn>
+            <v-btn
+              class="mr-4"
+              to="/home"
+            >
+              戻る
+            </v-btn>
           </v-form>
+          <router-link
+            to="/user/password"
+          >
+            <p class="mt-4 mb-0">パスワードの更新はこちらから</p>
+          </router-link>
         </v-card-text>
       </v-card>
     </v-main>

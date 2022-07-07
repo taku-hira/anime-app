@@ -36,7 +36,7 @@
           </v-btn>
         </router-link>
         <v-menu
-        v-if="this.$route.path === '/home' || this.$route.path === '/detail/*' || this.$route.path === '/user'"
+        v-if="this.$route.path === '/home' || this.$route.path === '/detail/*' || this.$route.path === '/user' || this.$route.path === '/user/password'"
         bottom offset-y
         >
           <template v-slot:activator="{ on }">
