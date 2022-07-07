@@ -12,10 +12,12 @@
           <v-form  ref="form" @submit.prevent="update">
             <v-text-field
               v-model="input.password"
-              label="new password"
+              label="password"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
               :rules="[required]"
+              hint="新しいパスワードを８文字以上で設定してください"
+              counter
               @click:append="showPassword = !showPassword"
             ></v-text-field>
             <v-btn
@@ -26,7 +28,7 @@
             </v-btn>
             <v-btn
               class="mr-4"
-              to="/home"
+              to="/user"
             >
               戻る
             </v-btn>
@@ -40,13 +42,12 @@
 <script>
 export default {
   metaInfo: {
-    title: 'ユーザー登録'
+    title: 'パスワード更新'
     },
   data(){
     return {
       input: {
         'password': '',
-        'password_comfirmation': '',
       },
       user: [],
       message: '',
@@ -59,38 +60,17 @@ export default {
   methods: {
     update() {
       if (this.$refs.form.validate()) {
-          this.$axios.put('/api/user', {
-            name: this.input.name,
-            email: this.input.email,
-            prefecture_id: this.input.prefecture,
-            },
-          )
+          this.$axios.put('/api/user/password', {
+            password: this.input.password
+          })
           .then(() => {
-              this.$router.push('/home')
+              this.$router.push('/user')
           })
           .catch((error) => {
             this.message = error.response.data.message
           })
       }
     },
-    getUser() {
-      this.$axios.get('/api/user')
-      .then((res) => {
-        this.input.name = res.data.name
-        this.input.email = res.data.email
-        this.input.prefecture = res.data.prefecture_id
-      })
-    },
-    getPrefecture() {
-      this.$axios.get('/api/prefectures')
-        .then((res) => {
-            this.prefectures = res.data
-        })
-    }
   },
-  mounted() {
-    this.getPrefecture(),
-    this.getUser();
-  }
 }
 </script>
