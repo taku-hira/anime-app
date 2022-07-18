@@ -3,13 +3,13 @@
     <v-main>
       <v-card width="400px" class="mx-auto mt-5">
         <v-card-title>
-          <h1 class="display-1">Let's Sign UP!</h1>
+          <h1 class="display-1">ユーザー情報編集</h1>
         </v-card-title>
         <div class="err_msg">
           {{ message }}
         </div>
         <v-card-text>
-          <v-form  ref="form" @submit.prevent="register">
+          <v-form  ref="form" @submit.prevent="update">
             <v-text-field
               v-model="input.name"
               label="name"
@@ -29,32 +29,39 @@
               label="都道府県"
               :rules="[required,]"
             ></v-select>
-            <v-text-field
-              v-model="input.password"
-              label="password(8文字以上)"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPassword ? 'text' : 'password'"
-              :rules="[required, minimum_length]"
-              counter
-              @click:append="showPassword = !showPassword"
-            ></v-text-field>
             <v-btn
               class="mr-4"
               type="submit"
             >
-              ユーザー登録
+              更新
+            </v-btn>
+            <v-btn
+              class="mr-4"
+              to="/home"
+            >
+              戻る
             </v-btn>
           </v-form>
+          <router-link
+            to="/user/password"
+          >
+            <p class="mt-4 mb-0">パスワードの更新はこちらから</p>
+          </router-link>
         </v-card-text>
+        <delete-dialog-component />
       </v-card>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import DeleteDialogComponent from '../components/DeleteDialogComponent.vue'
 export default {
   metaInfo: {
     title: 'ユーザー登録'
+    },
+    components: {
+      DeleteDialogComponent,
     },
   data(){
     return {
@@ -62,10 +69,8 @@ export default {
         'name': '',
         'email': '',
         'prefecture': '',
-        'password': '',
       },
-      showPassword: false,
-      status: '',
+      user: [],
       message: '',
       prefectures: [],
       required: value => !!value || "必ず入力してください",
@@ -75,38 +80,47 @@ export default {
     }
   },
   methods: {
-    register() {
+    update() {
       if (this.$refs.form.validate()) {
-        this.$axios.get('/sanctum/csrf-cookie', { withCredentials: true }).then(() => {
-          this.$axios.post('/register', {
+          this.$axios.put('/api/user', {
             name: this.input.name,
             email: this.input.email,
             prefecture_id: this.input.prefecture,
-            password: this.input.password,
             },
-            { withCredentials: true }
           )
           .then(() => {
-              localStorage.setItem("isAuth", "ture")
               this.$router.push('/home')
           })
           .catch((error) => {
             this.message = error.response.data.message
           })
-        })
-      } else {
-        this.$refs.form.validate()
       }
+    },
+    deleteUser() {
+      this.$axios.delete('/api/user')
+      .then(() => {
+        localStorage.removeItem("isAuth")
+        this.$router.push("/")
+      })
+    },
+    getUser() {
+      this.$axios.get('/api/user')
+      .then((res) => {
+        this.input.name = res.data.name
+        this.input.email = res.data.email
+        this.input.prefecture = res.data.prefecture_id
+      })
     },
     getPrefecture() {
       this.$axios.get('/api/prefectures')
         .then((res) => {
-            this.prefectures = res.data;
-        });
+            this.prefectures = res.data
+        })
     }
   },
   mounted() {
-    this.getPrefecture()
+    this.getPrefecture(),
+    this.getUser()
   }
 }
 </script>

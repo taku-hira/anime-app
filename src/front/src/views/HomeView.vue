@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h1 class="mb-4">2022年 春アニメ</h1>
+    <v-select
+    v-model="selectedSeason"
+    item-text="name"
+    item-value="id"
+    :items="seasons"
+    label="シーズン"
+    ></v-select>
     <v-row fill-height>
       <v-col
       v-for="anime in animes"
@@ -52,11 +58,22 @@
     data() {
       return {
         animes: [],
+        selectedSeason: 2,
+        seasons: [
+          {id: 1, name: '2022年春アニメ'},
+          {id: 2, name: '2022年夏アニメ'},
+          {id: 3, name: '2022年秋アニメ'},
+        ],
+      }
+    },
+    watch: {
+      selectedSeason : function() {
+        this.getAnimes()
       }
     },
     methods: {
       getAnimes() {
-        this.$axios.get('/api/animes')
+        this.$axios.get('/api/animes/' + this.selectedSeason)
           .then((res) => {
             this.animes = res.data;
           })
@@ -65,7 +82,7 @@
           })
       },
       favorite(anime) {
-        this.$axios.put('/api/animes/' + anime.id + '/favorite')
+        this.$axios.put('/api/favorite/' + anime.id)
           .then(() => {
             anime.favorite_by_user = true
           })
@@ -74,7 +91,7 @@
           })
       },
       unFavorite(anime) {
-        this.$axios.delete('/api/animes/' + anime.id + '/favorite')
+        this.$axios.delete('/api/favorite/' + anime.id)
           .then(() => {
             anime.favorite_by_user = false
           })
@@ -92,7 +109,7 @@
       },
       openLink(anime) {
         window.open(anime.official_site_url, '_blank')
-      }
+      },
     },
     mounted() {
       this.getAnimes();

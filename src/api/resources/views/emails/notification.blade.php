@@ -9,10 +9,7 @@
         </div>
         <br>
         <div>
-            <p>" {{ $on_air_date }} "</p>
-        </div>
-        <br>
-        <div>
+            <p>{{ $on_air_date }} </p>
             <p>{{ $on_air_info }}</p>
         </div>
         <br>

@@ -54,11 +54,28 @@ class OnAirDataController extends Controller
 
     public function splitCharacters($string)
     {
-        $on_air_date = mb_substr($string, 0, 5);
-        $on_air_info = mb_substr($string, 9);
-        $on_air_date = str_replace('月', '-', $on_air_date);
-        $on_air_date = str_replace('日', '', $on_air_date);
-        return [$on_air_date => $on_air_info];
+        if (mb_strpos($string, '日') === 3) {
+            $on_air_date = mb_substr($string, 0, 4);
+            $on_air_info = mb_substr($string, 8);
+            $on_air_date = str_replace('月', '-', $on_air_date);
+            $on_air_date = str_replace('日', '', $on_air_date);
+            $on_air_info = str_replace('#', 'エピソード', $on_air_info);
+            return [$on_air_date => $on_air_info];
+        } elseif (mb_strpos($string, '日') === 4) {
+            $on_air_date = mb_substr($string, 0, 5);
+            $on_air_info = mb_substr($string, 9);
+            $on_air_date = str_replace('月', '-', $on_air_date);
+            $on_air_date = str_replace('日', '', $on_air_date);
+            $on_air_info = str_replace('#', 'エピソード', $on_air_info);
+            return [$on_air_date => $on_air_info];
+        } elseif (mb_strpos($string, '日') === 5) {
+            $on_air_date = mb_substr($string, 0, 6);
+            $on_air_info = mb_substr($string, 10);
+            $on_air_date = str_replace('月', '-', $on_air_date);
+            $on_air_date = str_replace('日', '', $on_air_date);
+            $on_air_info = str_replace('#', 'エピソード', $on_air_info);
+            return [$on_air_date => $on_air_info];
+        }
     }
 
     public function insertOnAirdata($title, $date, $info)
@@ -73,5 +90,22 @@ class OnAirDataController extends Controller
             ];
         }
         OnAirData::upsert($params, 'id');
+    }
+
+    public function getLatestOnAirData($anime_id)
+    {
+        $on_air_data = OnAirData::where(
+            'anime_id', '=', $anime_id,
+            )->latest()->first();
+        if ($on_air_data) {
+            return response()->json([
+                'date' => date('Y年m月d日', strtotime($on_air_data->on_air_date)),
+                'info' => $on_air_data->on_air_info,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => '番組情報はありません'
+            ], 200);
+        }
     }
 }
