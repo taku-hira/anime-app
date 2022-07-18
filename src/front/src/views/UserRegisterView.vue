@@ -32,9 +32,11 @@
             <v-text-field
               v-model="input.password"
               label="password(8文字以上)"
-              type="password"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
               :rules="[required, minimum_length]"
               counter
+              @click:append="showPassword = !showPassword"
             ></v-text-field>
             <v-btn
               class="mr-4"
@@ -62,6 +64,7 @@ export default {
         'prefecture': '',
         'password': '',
       },
+      showPassword: false,
       status: '',
       message: '',
       prefectures: [],

@@ -58,17 +58,16 @@
     data() {
       return {
         animes: [],
-        selectedSeason: 1,
+        selectedSeason: 2,
         seasons: [
           {id: 1, name: '2022年春アニメ'},
           {id: 2, name: '2022年夏アニメ'},
-          {id: 3, name: '2022年冬アニメ'},
+          {id: 3, name: '2022年秋アニメ'},
         ],
       }
     },
     watch: {
       selectedSeason : function() {
-        console.log(this.selectedSeason)
         this.getAnimes()
       }
     },
@@ -110,7 +109,7 @@
       },
       openLink(anime) {
         window.open(anime.official_site_url, '_blank')
-      }
+      },
     },
     mounted() {
       this.getAnimes();

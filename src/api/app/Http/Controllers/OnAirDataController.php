@@ -91,4 +91,21 @@ class OnAirDataController extends Controller
         }
         OnAirData::upsert($params, 'id');
     }
+
+    public function getLatestOnAirData($anime_id)
+    {
+        $on_air_data = OnAirData::where(
+            'anime_id', '=', $anime_id,
+            )->latest()->first();
+        if ($on_air_data) {
+            return response()->json([
+                'date' => date('Y年m月d日', strtotime($on_air_data->on_air_date)),
+                'info' => $on_air_data->on_air_info,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => '番組情報はありません'
+            ], 200);
+        }
+    }
 }
