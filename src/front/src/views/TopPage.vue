@@ -1,43 +1,19 @@
 <template>
   <v-main>
     <v-container>
-      <v-layout>
-        <v-flex align-self-center>
-          <h1>アニメを見逃してしまったことありませんか・・・？</h1>
-          <h1 class="mt-8">もう見逃さないために・・・ </h1>
-          <router-link to="register">
-            <v-btn
-            class="my-8"
-            color="primary"
-            elevation="2"
-            rounded
-            block
-            >
-            ユーザー登録して始める
-            </v-btn>
-          </router-link>
-          <router-link to="login">
-            <v-btn
-            class="my-8"
-            color="primary"
-            elevation="2"
-            rounded
-            block
-            >
-            ログインして始める
-            </v-btn>
-          </router-link>
-        </v-flex>
-        <v-flex>
-          <v-img src="@/assets/image/top_image1.png" alt="落ち込んでいる"></v-img>
-        </v-flex>
-      </v-layout>
-      <h2>Anitifyを使えば登録したアニメの放送日に通知が届きます</h2>
+      <div class="my-4">
+        <h1 class="text-center">アニメを見逃さないようにAnitifyを始めましょう</h1>
+      </div>
+      <v-img src="@/assets/image/top_image.png"></v-img>
+      <div class="mt-8">
+        <h2 class="text-center">Anitifyを使えば登録したアニメの放送日に通知が届きます</h2>
+      </div>
       <v-img
-      src="@/assets/image/card3.png" alt="カードの説明"
+      src="@/assets/image/anitify-top.png" alt="カードの説明"
+      class="my-8"
       >
       </v-img>
-      <h2>ログイン後、アニメの❤️をクリックするとお気に入り登録ができ、通知が届くようになります</h2>
+      <h2 class="text-center">ログイン後、お気に入り登録ができ、通知が届くようになります</h2>
       <router-link to="register">
             <v-btn
             class="my-8"

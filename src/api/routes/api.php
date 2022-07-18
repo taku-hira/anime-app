@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\OnAirDataController;
 use App\Http\Controllers\PrefectureController;
 use App\Http\Controllers\UserController;
 
@@ -35,3 +36,4 @@ Route::middleware(['auth:sanctum'])->group(function(){
 });
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);
+Route::get('/onair/{anime_id}', [OnAirDataController::class, 'getLatestOnAirData']);

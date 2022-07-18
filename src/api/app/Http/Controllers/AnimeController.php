@@ -10,7 +10,7 @@ class AnimeController extends Controller
     const SEASONS = [
         1 => '2022年春アニメ',
         2 => '2022年夏アニメ',
-        3 => '2022年冬アニメ',
+        3 => '2022年秋アニメ',
     ];
 
     public function index($season)

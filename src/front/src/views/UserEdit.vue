@@ -120,7 +120,7 @@ export default {
   },
   mounted() {
     this.getPrefecture(),
-    this.getUser();
+    this.getUser()
   }
 }
 </script>

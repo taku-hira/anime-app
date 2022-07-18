@@ -18,8 +18,11 @@
             <v-text-field
               v-model="input.password"
               label="password"
-              type="password"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
               :rules="[required]"
+              counter
+              @click:append="showPassword = !showPassword"
             ></v-text-field>
             <v-btn
               class="mr-4"
@@ -51,6 +54,7 @@ export default {
         'email': '',
         'password': '',
       },
+      showPassword: false,
       status: '',
       message: '',
       user: '',
