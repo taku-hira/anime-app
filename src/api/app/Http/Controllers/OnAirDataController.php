@@ -39,7 +39,6 @@ class OnAirDataController extends Controller
                 $on_air_info_list[] = $data;
             }
         }
-        dd($title_list, $on_air_date_list, $on_air_info_list);
         $this->insertOnAirdata($title_list, $on_air_date_list, $on_air_info_list);
     }
 
