@@ -39,6 +39,7 @@ class OnAirDataController extends Controller
                 $on_air_info_list[] = $data;
             }
         }
+        dd($title_list, $on_air_date_list, $on_air_info_list);
         $this->insertOnAirdata($title_list, $on_air_date_list, $on_air_info_list);
     }
 
@@ -83,11 +84,13 @@ class OnAirDataController extends Controller
         $params =[];
         for ($i = 0; $i < count($title); $i ++) {
             $anime_title = Anime::where('title', '=', $title[$i])->first();
-            $params[] = [
-                'anime_id' => $anime_title->id,
-                'on_air_date' => date('Y-m-d', strtotime('2022-' . $date[$i])),
-                'on_air_info' => $info[$i],
-            ];
+            if ($anime_title) {
+                $params[] = [
+                    'anime_id' => $anime_title->id,
+                    'on_air_date' => date('Y-m-d', strtotime('2022-' . $date[$i])),
+                    'on_air_info' => $info[$i],
+                ];
+            }
         }
         OnAirData::upsert($params, 'id');
     }
