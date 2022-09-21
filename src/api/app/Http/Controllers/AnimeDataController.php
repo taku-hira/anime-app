@@ -36,7 +36,7 @@ class AnimeDataController extends Controller
 
     public function getUrl($client)
     {
-        $crawler = $client->request('GET', 'https://anime.eiga.com/program/');
+        $crawler = $client->request('GET', 'https://anime.eiga.com/program/season/2022-summer/');
         $anime_url = $crawler->filter('.animeSeasonBox')->each(function ($element) {
             return 'https://anime.eiga.com' . $element->filter('a')->attr('href');
         });
