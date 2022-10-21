@@ -58,7 +58,7 @@
     data() {
       return {
         animes: [],
-        selectedSeason: 2,
+        selectedSeason: 3,
         seasons: [
           {id: 1, name: '2022年春アニメ'},
           {id: 2, name: '2022年夏アニメ'},
