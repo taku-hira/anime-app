@@ -37,6 +37,7 @@
             </v-btn>
             <v-btn
               class="mr-4"
+              color="primary"
               to="/home"
             >
               戻る
