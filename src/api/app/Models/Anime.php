@@ -36,6 +36,11 @@ class Anime extends Model
         return $this->hasMany(OnAirData::class);
     }
 
+    public function comment()
+    {
+        return $this->hasMany(OnAirData::class);
+    }
+
     public function getFavoriteByUserAttribute()
     {
         if (Auth::guest()) {
