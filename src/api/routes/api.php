@@ -7,6 +7,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OnAirDataController;
 use App\Http\Controllers\PrefectureController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::put('/user/password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
     Route::delete('/user', [UserController::class, 'destroy'])->name('user.destroy');
 });
+Route::get('/comment/{anime_id}', [CommentController::class, 'index'])->name('comment.index');
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);
 Route::get('/onair/{anime_id}', [OnAirDataController::class, 'getLatestOnAirData']);

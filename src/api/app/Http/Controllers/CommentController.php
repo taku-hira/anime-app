@@ -7,8 +7,8 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    public function index($id) {
-        $comments = Comment::where('anime_id', '=', $id)->get();
+    public function index($anime_id) {
+        $comments = Comment::where('anime_id', '=', $anime_id)->get();
         return response()->json($comments);
     }
 }
