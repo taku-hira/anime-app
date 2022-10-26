@@ -37,12 +37,28 @@
         md="6"
         sm="12"
         xs="12"
+        class="mb-4"
       >
         <v-img
           :src="anime.img_file_name"
         ></v-img>
       </v-col>
     </v-row>
+    <div
+    v-for="comment in comments"
+    :key="comment.id"
+    >
+      <v-card
+      elevation="2"
+      >
+        <v-icon class="mr-2">
+          mdi-account
+        </v-icon>
+        {{ comment.user_id }}
+        {{ comment.stars }}
+        <p>{{ comment.comment }}</p>
+      </v-card>
+    </div>
   </v-container>
 </template>
 
@@ -55,6 +71,7 @@
           return {
               anime: {},
               onAirData: {},
+              comments: {},
           }
       },
       metaInfo () {
@@ -77,11 +94,18 @@
             .catch(() => {
               this.onAirData = null
             })
+        },
+        getComments() {
+          this.$axios.get('api/comment/' + this.$route.params.id)
+            .then((res) => {
+              this.comments = res.data
+            })
         }
       },
       mounted() {
         this.getAnime(),
-        this.getOnAirData()
+        this.getOnAirData(),
+        this.getComments()
       }
     }
 </script>
