@@ -44,6 +44,24 @@
         ></v-img>
       </v-col>
     </v-row>
+    <div>
+      <v-form ref="form" >
+        <v-select
+        v-model="input.star"
+        :items="stars"
+        ></v-select>
+        <v-textarea
+        solo
+        v-model="input.comment"
+        label="コメント・感想"
+        ></v-textarea>
+        <v-btn
+        class="mb-4 ml-auto"
+        >
+          コメントする
+        </v-btn>
+      </v-form>
+    </div>
     <div
     v-for="comment in comments"
     :key="comment.id"
@@ -72,6 +90,11 @@
               anime: {},
               onAirData: {},
               comments: {},
+              stars: [1, 2, 3, 4, 5],
+              input: {
+                'comment': '',
+                'star': '',
+              }
           }
       },
       metaInfo () {
