@@ -123,7 +123,10 @@
             .then((res) => {
               this.comments = res.data
             })
-        }
+        },
+        sendComment() {
+          
+        },
       },
       mounted() {
         this.getAnime(),
