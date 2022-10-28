@@ -74,7 +74,12 @@
           mdi-account
         </v-icon>
         {{ comment.user.name }}
-        {{ comment.stars }}
+        <star-rating
+        :read-only="true"
+        :rating="comment.stars"
+        :show-rating="false"
+        v-bind:star-size="20"
+        ></star-rating>
         <p>{{ comment.comment }}</p>
       </v-card>
     </div>
@@ -82,9 +87,13 @@
 </template>
 
 <script>
+  import StarRating from "vue-star-rating"
   export default {
       props: {
         id: String
+      },
+      components: {
+        StarRating
       },
       data() {
           return {
