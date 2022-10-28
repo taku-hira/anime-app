@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     public function index($anime_id) {
-        $comments = Comment::where('anime_id', '=', $anime_id)->get();
+        $comments = Comment::with('user')->where('anime_id', '=', $anime_id)->latest()->get();
         return response()->json($comments);
     }
 
@@ -17,7 +17,6 @@ class CommentController extends Controller
     {
         $request->validate([
             'anime_id' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
             'comment' => ['required'],
             'stars' => ['integer', 'required', 'min:0', 'max:5'],
         ]);

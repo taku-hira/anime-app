@@ -45,9 +45,9 @@
       </v-col>
     </v-row>
     <div>
-      <v-form ref="form" >
+      <v-form ref="form" @submit.prevent="sendComment">
         <v-select
-        v-model="input.star"
+        v-model="input.stars"
         :items="stars"
         ></v-select>
         <v-textarea
@@ -57,6 +57,7 @@
         ></v-textarea>
         <v-btn
         class="mb-4 ml-auto"
+        type="submit"
         >
           コメントする
         </v-btn>
@@ -69,10 +70,10 @@
       <v-card
       elevation="2"
       >
-        <v-icon class="mr-2">
+        <v-icon>
           mdi-account
         </v-icon>
-        {{ comment.user_id }}
+        {{ comment.user.name }}
         {{ comment.stars }}
         <p>{{ comment.comment }}</p>
       </v-card>
@@ -90,10 +91,12 @@
               anime: {},
               onAirData: {},
               comments: {},
+              message: '',
               stars: [1, 2, 3, 4, 5],
               input: {
+                'anime_id': this.$route.params.id,
                 'comment': '',
-                'star': '',
+                'stars': '',
               }
           }
       },
@@ -125,7 +128,18 @@
             })
         },
         sendComment() {
-          
+          this.$axios.post('api/comment/' + this.$route.params.id, {
+            anime_id: this.input.anime_id,
+            comment: this.input.comment,
+            stars: this.input.stars,
+          })
+            .then(() => {
+              this.getComments()
+            })
+            .catch((error) => {
+              this.message = error.response.data.message
+              console.log(this.message)
+            })
         },
       },
       mounted() {
