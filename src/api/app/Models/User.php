@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Anime;
+use App\Models\Comment;
 
 class User extends Authenticatable
 {
@@ -49,5 +50,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Anime::class, 'favorites')
                     ->withPivot('id')
                     ->withTimestamps();
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
