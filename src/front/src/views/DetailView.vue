@@ -37,12 +37,47 @@
         md="6"
         sm="12"
         xs="12"
+        class="mb-4"
       >
         <v-img
           :src="anime.img_file_name"
         ></v-img>
       </v-col>
     </v-row>
+    <div>
+      <v-form ref="form" @submit.prevent="sendComment">
+        <v-select
+        v-model="input.stars"
+        :items="stars"
+        ></v-select>
+        <v-textarea
+        solo
+        v-model="input.comment"
+        label="コメント・感想"
+        ></v-textarea>
+        <v-btn
+        class="mb-4 ml-auto"
+        type="submit"
+        >
+          コメントする
+        </v-btn>
+      </v-form>
+    </div>
+    <div
+    v-for="comment in comments"
+    :key="comment.id"
+    >
+      <v-card
+      elevation="2"
+      >
+        <v-icon>
+          mdi-account
+        </v-icon>
+        {{ comment.user.name }}
+        {{ comment.stars }}
+        <p>{{ comment.comment }}</p>
+      </v-card>
+    </div>
   </v-container>
 </template>
 
@@ -55,6 +90,14 @@
           return {
               anime: {},
               onAirData: {},
+              comments: {},
+              message: '',
+              stars: [1, 2, 3, 4, 5],
+              input: {
+                'anime_id': this.$route.params.id,
+                'comment': '',
+                'stars': '',
+              }
           }
       },
       metaInfo () {
@@ -77,11 +120,32 @@
             .catch(() => {
               this.onAirData = null
             })
-        }
+        },
+        getComments() {
+          this.$axios.get('api/comment/' + this.$route.params.id)
+            .then((res) => {
+              this.comments = res.data
+            })
+        },
+        sendComment() {
+          this.$axios.post('api/comment/' + this.$route.params.id, {
+            anime_id: this.input.anime_id,
+            comment: this.input.comment,
+            stars: this.input.stars,
+          })
+            .then(() => {
+              this.getComments()
+            })
+            .catch((error) => {
+              this.message = error.response.data.message
+              console.log(this.message)
+            })
+        },
       },
       mounted() {
         this.getAnime(),
-        this.getOnAirData()
+        this.getOnAirData(),
+        this.getComments()
       }
     }
 </script>
