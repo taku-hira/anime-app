@@ -46,10 +46,12 @@
     </v-row>
     <div>
       <v-form ref="form" @submit.prevent="sendComment">
-        <v-select
+        総合評価
+        <star-rating
+        :show-rating="false"
+        v-bind:star-size="30"
         v-model="input.stars"
-        :items="stars"
-        ></v-select>
+        ></star-rating>
         <v-textarea
         solo
         v-model="input.comment"
@@ -74,7 +76,12 @@
           mdi-account
         </v-icon>
         {{ comment.user.name }}
-        {{ comment.stars }}
+        <star-rating
+        :read-only="true"
+        :rating="comment.stars"
+        :show-rating="false"
+        v-bind:star-size="20"
+        ></star-rating>
         <p>{{ comment.comment }}</p>
       </v-card>
     </div>
@@ -82,9 +89,13 @@
 </template>
 
 <script>
+  import StarRating from "vue-star-rating"
   export default {
       props: {
         id: String
+      },
+      components: {
+        StarRating
       },
       data() {
           return {
@@ -92,11 +103,10 @@
               onAirData: {},
               comments: {},
               message: '',
-              stars: [1, 2, 3, 4, 5],
               input: {
                 'anime_id': this.$route.params.id,
                 'comment': '',
-                'stars': '',
+                'stars': 0,
               }
           }
       },
@@ -135,6 +145,8 @@
           })
             .then(() => {
               this.getComments()
+              this.input.comment = ''
+              this.input.stars = 0
             })
             .catch((error) => {
               this.message = error.response.data.message
