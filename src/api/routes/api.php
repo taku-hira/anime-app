@@ -35,7 +35,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::put('/user/password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
     Route::delete('/user', [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('/comment/{anime_id}', [CommentController::class, 'create'])->name('comment.create');
-    Route::get('/comment/{anime_id}', [CommentController::class, 'index'])->name('comment.index');
+    Route::get('/comments/{anime_id}', [CommentController::class, 'index'])->name('comment.index');
+    Route::get('/comment/{id}', [CommentController::class, 'edit'])->name('comment.edit');
 });
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);

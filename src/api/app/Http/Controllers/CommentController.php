@@ -30,4 +30,10 @@ class CommentController extends Controller
         ]);
         return response()->json($comment);
     }
+
+    public function edit($id)
+    {
+        $comment = Comment::findOrFail($id);
+        return response()->json($comment);
+    }
 }

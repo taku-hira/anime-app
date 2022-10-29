@@ -83,6 +83,7 @@
         v-bind:star-size="20"
         ></star-rating>
         <p>{{ comment.comment }}</p>
+        <v-btn>編集</v-btn>
       </v-card>
     </div>
   </v-container>
@@ -132,7 +133,7 @@
             })
         },
         getComments() {
-          this.$axios.get('api/comment/' + this.$route.params.id)
+          this.$axios.get('api/comments/' + this.$route.params.id)
             .then((res) => {
               this.comments = res.data
             })
