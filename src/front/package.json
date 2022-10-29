@@ -16,6 +16,7 @@
     "vue-cli-plugin-s3-deploy": "^2.1.1",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.5.1",
+    "vue-star-rating": "^1.7.0",
     "vuetify": "^2.6.0"
   },
   "devDependencies": {
