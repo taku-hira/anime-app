@@ -31,9 +31,17 @@ class CommentController extends Controller
         return response()->json($comment);
     }
 
-    public function edit($id)
+    public function update(Request $request, $id)
     {
         $comment = Comment::findOrFail($id);
-        return response()->json($comment);
+        $request->validate([
+            'comment' => ['required'],
+            'stars' => ['integer', 'required', 'min:0', 'max:5'],
+        ]);
+        $comment->comment = $request->comment;
+        $comment->stars = $request->stars;
+        $comment->save();
+
+        return response()->json($comment,200);
     }
 }
