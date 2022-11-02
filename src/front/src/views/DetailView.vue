@@ -83,6 +83,12 @@
         v-bind:star-size="20"
         ></star-rating>
         <p>{{ comment.comment }}</p>
+        <comment-edit-dialog-component
+        v-if="user.id === comment.user.id"
+        :id="comment.id"
+        :comment="comment.comment"
+        :stars="comment.stars"
+        ></comment-edit-dialog-component>
       </v-card>
     </div>
   </v-container>
@@ -90,16 +96,19 @@
 
 <script>
   import StarRating from "vue-star-rating"
+  import CommentEditDialogComponent from '../components/CommentEditDialogComponent.vue'
   export default {
       props: {
         id: String
       },
       components: {
-        StarRating
+        StarRating,
+        CommentEditDialogComponent
       },
       data() {
           return {
               anime: {},
+              user: {},
               onAirData: {},
               comments: {},
               message: '',
@@ -132,7 +141,7 @@
             })
         },
         getComments() {
-          this.$axios.get('api/comment/' + this.$route.params.id)
+          this.$axios.get('api/comments/' + this.$route.params.id)
             .then((res) => {
               this.comments = res.data
             })
@@ -153,11 +162,18 @@
               console.log(this.message)
             })
         },
+        getUser() {
+          this.$axios.get('/api/user')
+          .then((res) => {
+            this.user = res.data
+          })
+        }
       },
       mounted() {
         this.getAnime(),
         this.getOnAirData(),
-        this.getComments()
+        this.getComments(),
+        this.getUser()
       }
     }
 </script>
