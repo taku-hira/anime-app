@@ -71,6 +71,7 @@
     >
       <v-card
       elevation="2"
+      class="ma-4 pa-4"
       >
         <v-icon>
           mdi-account
@@ -89,6 +90,12 @@
         :comment="comment.comment"
         :stars="comment.stars"
         ></comment-edit-dialog-component>
+
+        <comment-delete-dialog-component
+        v-if="user.id === comment.user.id"
+        :id="comment.id"
+        :anime_id="comment.anime_id"
+        ></comment-delete-dialog-component>
       </v-card>
     </div>
   </v-container>
@@ -97,13 +104,15 @@
 <script>
   import StarRating from "vue-star-rating"
   import CommentEditDialogComponent from '../components/CommentEditDialogComponent.vue'
+  import CommentDeleteDialogComponent from '../components/CommentDeleteDialogComponent.vue'
   export default {
       props: {
         id: String
       },
       components: {
         StarRating,
-        CommentEditDialogComponent
+        CommentEditDialogComponent,
+        CommentDeleteDialogComponent
       },
       data() {
           return {

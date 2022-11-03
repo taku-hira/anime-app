@@ -37,6 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/comment/{anime_id}', [CommentController::class, 'create'])->name('comment.create');
     Route::get('/comments/{anime_id}', [CommentController::class, 'index'])->name('comment.index');
     Route::put('/comment/{id}', [CommentController::class, 'update'])->name('comment.update');
+    Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
 });
 
 Route::get('/prefectures', [PrefectureController::class, 'getPrefectureData']);
