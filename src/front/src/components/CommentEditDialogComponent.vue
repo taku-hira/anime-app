@@ -37,7 +37,7 @@
         <v-btn
           color="green darken-1"
           text
-          @click="editComment; dialog = false"
+          @click="editComment"
         >
           編集する
         </v-btn>
@@ -75,6 +75,9 @@
             comment: this.input.comment,
             stars: this.input.stars,
           })
+            .then(() => {
+              this.$router.go({path: this.$router.currentRoute.path, force: true})
+            })
             .catch((error) => {
               this.message = error.response.data.message
               console.log(this.message)
