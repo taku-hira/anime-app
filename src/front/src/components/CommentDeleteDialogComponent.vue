@@ -51,8 +51,11 @@
       deleteComment() {
       this.$axios.delete('/api/comment/' + this.id)
       .then(() => {
-        this.$router.go({path: this.$router.currentRoute.path, force: true})
-      })
+        // this.$router.go({path: this.$router.currentRoute.path, force: true})
+          document.getElementById('commentContents' + this.id).style.display='none';
+          this.dialog = false
+        }
+      )
     },
     }
   }
