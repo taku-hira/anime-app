@@ -57,6 +57,9 @@
         v-model="input.comment"
         label="コメント・感想"
         ></v-textarea>
+        <div class="err_msg">
+          {{ message }}
+        </div>
         <v-btn
         class="mb-4 ml-auto"
         type="submit"
@@ -68,6 +71,7 @@
     <div
     v-for="comment in comments"
     :key="comment.id"
+    :id="'commentContents' + comment.id"
     >
       <v-card
       elevation="2"
@@ -77,13 +81,18 @@
           mdi-account
         </v-icon>
         {{ comment.user.name }}
+        {{ comment.created_at }}
         <star-rating
         :read-only="true"
         :rating="comment.stars"
         :show-rating="false"
+        :id="'commentStar' + comment.id"
         v-bind:star-size="20"
         ></star-rating>
-        <p>{{ comment.comment }}</p>
+        <p
+         style="white-space: pre-wrap;"
+         v-text="comment.comment"
+         :id="'commentText' + comment.id"></p>
         <comment-edit-dialog-component
         v-if="user.id === comment.user.id"
         :id="comment.id"
@@ -118,14 +127,14 @@
           return {
               anime: {},
               user: {},
-              onAirData: {},
               comments: {},
+              onAirData: {},
               message: '',
               input: {
                 'anime_id': this.$route.params.id,
                 'comment': '',
                 'stars': 0,
-              }
+              },
           }
       },
       metaInfo () {
@@ -168,7 +177,6 @@
             })
             .catch((error) => {
               this.message = error.response.data.message
-              console.log(this.message)
             })
         },
         getUser() {

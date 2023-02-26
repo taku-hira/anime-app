@@ -13,7 +13,7 @@
         編集する
       </v-btn>
     </template>
-    <v-card>
+    <v-card class="pa-4">
       <v-card-title class="text-h5">
         コメント編集
       </v-card-title>
@@ -42,7 +42,6 @@
           編集する
         </v-btn>
         <v-btn
-          color="green darken-1"
           text
           @click="dialog = false"
         >
@@ -76,13 +75,25 @@
             stars: this.input.stars,
           })
             .then(() => {
-              this.$router.go({path: this.$router.currentRoute.path, force: true})
+              document.getElementById('commentText' + this.id).innerHTML=this.input.comment;
+              if (this.input.stars == '1') {
+                document.getElementById('commentStar' + this.id).innerHTML="<span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span>";
+              } else if (this.input.stars == '2') {
+                document.getElementById('commentStar' + this.id).innerHTML="<span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span>";
+              } else if (this.input.stars == '3') {
+                document.getElementById('commentStar' + this.id).innerHTML="<span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span>";
+              } else if (this.input.stars == '4') {
+                document.getElementById('commentStar' + this.id).innerHTML="<span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#d8d8d8;font-size:20px;'>★</span>";
+              } else if (this.input.stars == '5') {
+                document.getElementById('commentStar' + this.id).innerHTML="<span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055;font-size:20px;'>★</span><span style='color:#ffd055; font-size:20px;'>★</span>";
+              }
+              this.dialog = false
             })
             .catch((error) => {
               this.message = error.response.data.message
               console.log(this.message)
             })
-      }
+      },
     }
   }
 </script>
